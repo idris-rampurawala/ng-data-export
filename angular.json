@@ -28,8 +28,15 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./node_modules"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -123,6 +130,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "ng-data-export"
 }

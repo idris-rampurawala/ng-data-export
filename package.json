@@ -1,6 +1,20 @@
 {
   "name": "ng-data-export",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Export data to excel, csv in Angular",
+  "author": {
+    "name": "Idris Rampurawala",
+    "url": "https://github.com/idris-rampurawala",
+    "github": "https://github.com/idris-rampurawala",
+    "twitter": "https://twitter.com/idRampurawala"
+  },
+  "contributors": [
+    {
+      "name": "Idris Rampurawala",
+      "url": "https://github.com/idris-rampurawala"
+    }
+  ],
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -19,8 +33,12 @@
     "@angular/platform-browser": "~10.0.3",
     "@angular/platform-browser-dynamic": "~10.0.3",
     "@angular/router": "~10.0.3",
+    "bootstrap": "^5.0.0-alpha1",
+    "file-saver": "^2.0.2",
+    "font-awesome": "^4.7.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
+    "xlsx": "^0.16.6",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
