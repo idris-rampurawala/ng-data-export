@@ -37,7 +37,11 @@
                 "./node_modules"
               ]
             },
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "xlsx",
+              "file-saver"
+            ]
           },
           "configurations": {
             "production": {
