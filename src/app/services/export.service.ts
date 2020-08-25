@@ -3,7 +3,6 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { ExcelJson } from '../interfaces/excel-json.interface';
 
-const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
 const CSV_EXTENSION = '.csv';
 const CSV_TYPE = 'text/plain;charset=utf-8';
@@ -21,16 +20,20 @@ export class ExportService {
    */
   public exportTableElmToExcel(element: ElementRef, fileName: string): void {
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element.nativeElement);
-
     // generate workbook and add the worksheet
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, ws, 'Sheet1');
-
     // save to file
     XLSX.writeFile(workbook, `${fileName}${EXCEL_EXTENSION}`);
 
   }
 
+  /**
+   * Creates XLSX option from the Json data. Use this to customise the sheet by adding arbitrary rows and columns.
+   *
+   * @param json Json data to create xlsx.
+   * @param fileName filename to save as.
+   */
   public exportJsonToExcel(json: ExcelJson[], fileName: string): void {
     // inserting first blank row
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(
@@ -55,18 +58,17 @@ export class ExportService {
         this.getOptions(json[i], -1)
       );
     }
-    const workbook: XLSX.WorkBook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    this.saveAsFile(excelBuffer, `${fileName}${EXCEL_EXTENSION}`, EXCEL_TYPE);
+    const workbook: XLSX.WorkBook = { Sheets: { Sheet1: worksheet }, SheetNames: ['Sheet1'] };
+    // save to file
+    XLSX.writeFile(workbook, `${fileName}${EXCEL_EXTENSION}`);
   }
 
   /**
-   * Creates XLSX option from the data
+   * Creates XLSX option from the data.
    *
-   * @private
-   * @param json Json data to create xlsx
-   * @param origin XLSX option origin
-   * @returns options XLSX options
+   * @param json Json data to create xlsx.
+   * @param origin XLSX option origin.
+   * @returns options XLSX options.
    */
   private getOptions(json: ExcelJson, origin?: number): any {
     // adding actual data
@@ -86,12 +88,11 @@ export class ExportService {
   }
 
   /**
-   * Saves the file on client's machine via FileSaver library
+   * Saves the file on client's machine via FileSaver library.
    *
-   * @private
-   * @param buffer The data that need to be saved
-   * @param fileName File name to save as
-   * @param fileType File type to save as
+   * @param buffer The data that need to be saved.
+   * @param fileName File name to save as.
+   * @param fileType File type to save as.
    */
   private saveAsFile(buffer: any, fileName: string, fileType: string): void {
     const data: Blob = new Blob([buffer], { type: fileType });

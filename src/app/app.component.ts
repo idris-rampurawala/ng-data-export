@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
    *
    */
   exportElmToExcel(): void {
-    this.exportService.exportTableElmToExcel(this.userTable, 'User Data');
+    this.exportService.exportTableElmToExcel(this.userTable, 'user_data');
   }
 
   /**
@@ -56,7 +56,9 @@ export class AppComponent implements OnInit {
    *
    */
   exportToExcel(): void {
-    const edata: ExcelJson = {
+
+    const edata: Array<ExcelJson> = [];
+    const udt: ExcelJson = {
       data: [
         { A: 'User Data' }, // title
         { A: '#', B: 'First Name', C: 'Last Name', D: 'Handle' }, // table header
@@ -64,14 +66,34 @@ export class AppComponent implements OnInit {
       skipHeader: true
     };
     this.users.forEach(user => {
-      edata.data.push({
+      udt.data.push({
         A: user.id,
         B: user.firstName,
         C: user.lastName,
         D: user.handle
       });
     });
-    this.exportService.exportJsonToExcel([edata], 'User Data');
+    edata.push(udt);
+
+    // adding more data just to show "how we can keep on adding more data"
+    const bd = {
+      data: [
+        // chart title
+        { A: 'Some more data', B: '' },
+        { A: '#', B: 'First Name', C: 'Last Name', D: 'Handle' }, // table header
+      ],
+      skipHeader: true
+    };
+    this.users.forEach(user => {
+      bd.data.push({
+        A: String(user.id),
+        B: user.firstName,
+        C: user.lastName,
+        D: user.handle
+      });
+    });
+    edata.push(bd);
+    this.exportService.exportJsonToExcel(edata, 'user_data_customized');
   }
 
   /**
